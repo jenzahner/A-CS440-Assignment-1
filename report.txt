@@ -1,0 +1,65 @@
+# CS 440 Assignment 1: written answers
+# Run python3 make_report.py to combine these answers with your measurements.
+# Keep each rendered answer at most 520 characters, including macro values.
+# There is no minimum length. State the main argument; prepare full proofs for
+# code review. Lines starting with # are ignored.
+#
+# Cite measurements with macros, for example {{scatter.tie.ratio}}.
+# python3 autograder.py --macros lists the names and draft values.
+# Single digits in prose are allowed. Typed results such as 15, 0.42, 3x, and
+# 60% are rejected. Inspect report.pdf for warnings or truncated answers.
+
+=== MEMBERS ===
+# One per line, "Name, RUID".  Up to four.  These RUIDs also choose your
+# team's 50 gridworlds, so get them right before you generate a final report.
+YOUR NAME HERE, 000000000
+
+=== PLEDGE ===
+# Confirm that this statement is true for every team member; keep it unchanged.
+I did not use generative AI to write any code or any answer in this submission, and every member of this team can explain every line of it.
+
+=== Q1 ===
+# Why is the agent's first move east rather than north in Figure 1(a) of
+# the handout, given that it does not yet know which cells
+# are blocked?  Then: why are Manhattan
+# distances consistent when the agent may move only in the four compass
+# directions and every move costs one?
+REPLACE THIS TEXT WITH YOUR ANSWER
+
+=== Q2 ===
+# Why must the agent either reach the target or discover that it cannot, in
+# finite time?  Give the argument, and the reason the number of moves is bounded
+# above by the number of unblocked cells squared.
+REPLACE THIS TEXT WITH YOUR ANSWER
+
+=== Q3 ===
+# What did breaking ties toward larger g do to the number of expansions, and
+# why?  Say why the size of the effect is not the same on the two families.
+REPLACE THIS TEXT WITH YOUR ANSWER
+
+=== Q4 ===
+# Compare Repeated Backward A* and Repeated Forward A*. Explain how newly
+# discovered blockages affect the two directions. Say where each search
+# starts and how that start moves between replans.
+REPLACE THIS TEXT WITH YOUR ANSWER
+
+=== Q5 ===
+# Why are the updated h-values admissible and consistent, and why do they stay
+# consistent when action costs increase?  Then the measurement: state your null
+# hypothesis, say why the worlds are paired, and interpret the test on both
+# families. Distinguish significance from effect size, state the signed-rank
+# assumptions, and explain what failure to reject would mean.
+REPLACE THIS TEXT WITH YOUR ANSWER
+
+=== Q6 ===
+# Which landmarks did you pick and why?  Why is |d(l,s) - d(l,goal)| admissible
+# and consistent, and why does a table built from an older belief stay
+# admissible? Why use max rather than sum? Compare known-map and replanning
+# results, including table construction and the rebuild threshold.
+REPLACE THIS TEXT WITH YOUR ANSWER
+
+=== Q7 ===
+# Prove the w-times-optimal bound for a consistent base h without reopening.
+# Interpret the sweep and choose a weight. How can replanning affect the
+# trade-off? Can Adaptive A* safely learn C-g(s) from a weighted search?
+REPLACE THIS TEXT WITH YOUR ANSWER
