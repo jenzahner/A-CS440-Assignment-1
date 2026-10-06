@@ -12,7 +12,10 @@
 === MEMBERS ===
 # One per line, "Name, RUID".  Up to four.  These RUIDs also choose your
 # team's 50 gridworlds, so get them right before you generate a final report.
-YOUR NAME HERE, 000000000
+Ethan Schivel, 224004705
+Mufassak Diwan, 
+Mahkeh Patel, 223005088
+Jennifer Zahner,220009356
 
 === PLEDGE ===
 # Confirm that this statement is true for every team member; keep it unchanged.
