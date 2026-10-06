@@ -113,7 +113,16 @@ class AdaptiveAStar(RepeatedForwardAStar):
         ``problem.closed`` is the set of states it expanded. Keep the largest
         value you have ever learned for a state, never a smaller one.
         """
-        raise NotImplementedError("Part 5b: implement learn")
+        if path is None:
+            return
+        goal = path[-1]
+        C = g[goal]
+        for state in problem.closed:
+            new_h = C - g[state]
+            self.learned_h[state] = max(
+                self.learned_h.get(state, 0),
+                 new_h
+            )
 
 
 #: Registry the autograder and the report iterate over.
