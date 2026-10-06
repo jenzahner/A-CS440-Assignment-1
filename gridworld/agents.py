@@ -41,7 +41,21 @@ class RepeatedForwardAStar(ReplanningAgent):
         call ``problem.stop_clock()`` the moment it returns, and hand back both
         the path and the g-values.
         """
-        raise NotImplementedError("Part 2c: implement plan")
+        #create an A* problem that represents where I am to where I wanna go 
+        problem = self.make_search(self.pos, self.goal)
+
+        #call astar()
+        path, g = astar(
+            problem,
+            self.h, 
+            tie_break = self.tie_break,
+            weight = self.weight
+        )
+
+        #stop the search clock 
+        problem.stop_clock()
+
+        return path,g
 
     def run(self, max_steps: int = 200_000) -> bool:
         """Drive the agent to the target. Returns True if it arrived.
@@ -60,8 +74,45 @@ class RepeatedForwardAStar(ReplanningAgent):
         Return ``False`` -- do not raise, do not loop forever -- when a plan
         comes back ``None``. Set ``self.solved`` either way.
         """
-        raise NotImplementedError("Part 2d: implement run")
+        # agent needs to look -> plan -> walk -> discover -> replan 
 
+        #must look around first before planning 
+        self.sense() 
+
+        #handle if the start is the goal without searhcing first 
+        if self.pos == self.goal: 
+            self.solved = True 
+            return True
+        
+        steps = 0
+
+        path, g = self.plan()
+
+        #need to return false is the plan comes back as none 
+        if path is None: 
+            self.sovled = False 
+            return False
+
+        #follow the path given 
+        for next_cell in path [1:]: 
+            #make sure next_cell is free 
+            if not self.belief.is_known_free(next_cell): 
+                break 
+
+            self.move_to(next_cell)
+            steps +=1
+
+            if steps>=max_steps:
+                self.solved=False 
+                return False
+            
+            if self.pos == self.goal: 
+                self.solved = True 
+                return True
+
+        # if we get here and true has not already been returned then we have not solved it 
+        self.solved = False 
+        return False
 
 class RepeatedBackwardAStar(RepeatedForwardAStar):
     """Part 4: the same loop, searching from the target instead.
