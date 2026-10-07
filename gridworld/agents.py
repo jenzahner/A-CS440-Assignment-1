@@ -86,29 +86,31 @@ class RepeatedForwardAStar(ReplanningAgent):
         
         steps = 0
 
-        path, g = self.plan()
+        while steps<max_steps: 
+            path, g = self.plan()
 
-        #need to return false is the plan comes back as none 
-        if path is None: 
-            self.sovled = False 
-            return False
-
-        #follow the path given 
-        for next_cell in path [1:]: 
-            #make sure next_cell is free 
-            if not self.belief.is_known_free(next_cell): 
-                break 
-
-            self.move_to(next_cell)
-            steps +=1
-
-            if steps>=max_steps:
-                self.solved=False 
+            #need to return false is the plan comes back as none 
+            if path is None: 
+                self.solved = False 
                 return False
+
+            #follow the path given 
+            for next_cell in path [1:]: 
+                #make sure next_cell is free 
+                if not self.belief.is_known_free(next_cell): 
+                    break 
+
+                self.move_to(next_cell)
+                steps +=1
+
             
-            if self.pos == self.goal: 
-                self.solved = True 
-                return True
+                if self.pos == self.goal: 
+                    self.solved = True 
+                    return True
+
+                if steps>=max_steps:
+                    self.solved=False 
+                    return False
 
         # if we get here and true has not already been returned then we have not solved it 
         self.solved = False 

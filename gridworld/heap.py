@@ -75,7 +75,7 @@ class BinaryHeap:
         #move it downward to make the heap right again, and return the item from the original root
 
         # this saves the root
-        rootitem = self.data[0]
+        rootitem = self.data[0][1]
 
         #remove the last element 
         final = self.data.pop()

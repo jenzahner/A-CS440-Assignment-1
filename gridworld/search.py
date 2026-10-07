@@ -77,7 +77,7 @@ def astar(problem: SearchProblem, h, *, tie_break: str = "large_g",
     #part 2
 
     if problem.is_goal(problem.start): 
-        return ([problem.star], {problem.start: 0})
+        return ([problem.start], {problem.start: 0})
 
     g = {problem.start:0} #cost from the start to each other state 
     parent = {problem.start: None} #using to remember how we got there 
