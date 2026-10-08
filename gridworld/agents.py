@@ -155,7 +155,19 @@ class AdaptiveAStar(RepeatedForwardAStar):
         As Part 2c, but pass ``learned_h=self.learned_h`` to ``astar`` and
         afterwards call ``self.learn(problem, path, g)``.
         """
-        raise NotImplementedError("Part 5a: implement plan")
+        problem = self.make_search(self.pos, self.goal)
+
+        path, g = astar(
+            problem,
+            self.h,
+            tie_break=self.tie_break,
+            weight=self.weight,
+            learned_h=self.learned_h
+        )
+        problem.stop_clock()
+
+        self.learn(problem, path, g)
+        return path, g
 
     def learn(self, problem, path, g) -> None:
         """Record ``h_new(s) = g(goal) - g(s)`` for every expanded state.

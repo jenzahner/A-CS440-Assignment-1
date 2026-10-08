@@ -85,7 +85,11 @@ def astar(problem: SearchProblem, h, *, tie_break: str = "large_g",
     open_heap = BinaryHeap() # states we need to explore
 
     #A* uses f = g+h 
-    startf = h(problem.start,problem)
+    start_h = h(problem.start, problem)
+    if learned_h is not None:
+        start_h = max(start_h, learned_h.get(problem.start, 0))
+
+    startf = start_h
     open_heap.push(startf, problem.start)
 
     #keep taking the lowest priority state from open
@@ -111,7 +115,12 @@ def astar(problem: SearchProblem, h, *, tie_break: str = "large_g",
                 g[neighbor] = newg
                 parent[neighbor] = present 
                 #and calculate A* priority 
-                f = newg + h(neighbor,problem)
+                neighbor_h = h(neighbor, problem)
+
+                if learned_h is not None:
+                    neighbor_h = max(neighbor_h, learned_h.get(neighbor, 0))
+
+                f = newg + neighbor_h
                 #then add to open
                 open_heap.push(f,neighbor)
 
