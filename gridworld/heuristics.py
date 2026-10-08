@@ -37,7 +37,156 @@ def h_differential(state, problem) -> float:
     Choose and justify the number and placement of landmarks. ``corners``
     returns candidate locations, which may be blocked.
     """
-    raise NotImplementedError("Part 6a: implement h_differential")
+
+    e1 = problem.cache.get("diff")
+    #No tables 
+    if e1 is None:
+
+        grids1 = []
+        spots = []
+        totalc = corners(problem)
+
+        # Iterate over each corner to find landmarks.
+        for corner in totalc:
+            if problem.passable(*corner):
+                spot1 = corner
+            else:
+                x = corner[0]
+                y = corner[1]
+                if x == 0:
+                    sidesx = 1
+                else:
+                    sidesx = -1
+                if y == 0:
+                    sidesy = 1
+                else:
+                    sidesy = -1
+                # Determine the maximum w and h.
+                if problem.w > problem.h:
+                    size = problem.w
+                else:
+                    size = problem.h
+
+                spot1 = None
+                for k in range(size):
+                    finalx = x + (sidesx * k)
+                    finaly = y + (sidesy * k)
+
+                    if finalx >= 0 and finalx < problem.w:
+                        if finaly >= 0 and finaly < problem.h:
+
+                        
+                            if problem.passable(finalx, finaly):
+                                spot1 = (finalx, finaly)
+                                break
+
+            #If no landmark 
+            if spot1 is None:
+                continue
+            #No repeat landmarks 
+            if spot1 in spots:
+                continue
+            spots.append(spot1)
+
+            #BFS
+            grid = bfs_from(problem, spot1)
+
+            grids1.append(grid)
+
+        e1 = {
+            "built_at": problem.version,
+            "tables": grids1
+        }
+
+        problem.cache["diff"] = e1
+
+    else:
+        m = problem.version - e1["built_at"]
+
+        if m > REBUILD_EVERY:
+            grids1 = []
+            spots = []
+
+            all_corners = corners(problem)
+
+            for corner in all_corners:
+
+                if problem.passable(*corner):
+                    spot1 = corner
+
+                else:
+                    x = corner[0]
+                    y = corner[1]
+
+                    if x == 0:
+                        sidesx = 1
+                    else:
+                        sidesx = -1
+
+                    if y == 0:
+                        sidesy = 1
+                    else:
+                        sidesy = -1
+
+                    if problem.w > problem.h:
+                        size = problem.w
+                    else:
+                        size = problem.h
+
+                    spot1 = None
+
+                    for k in range(size):
+
+                        finalx = x + (sidesx * k)
+                        finaly = y + (sidesy * k)
+
+                        if finalx >= 0 and finalx < problem.w:
+                            if finaly >= 0 and finaly < problem.h:
+
+                                if problem.passable(finalx, finaly):
+                                    spot1 = (finalx, finaly)
+                                    break
+
+                if spot1 is None:
+                    continue
+
+                if spot1 in spots:
+                    continue
+
+                spots.append(spot1)
+
+                grid = bfs_from(problem, spot1)
+
+                grids1.append(grid)
+
+            e1 = {
+                "built_at": problem.version,
+                "tables": grids1
+            }
+
+            problem.cache["diff"] = e1
+
+    goal = problem.goal
+    f = 0
+
+    #every table
+    for grid in e1["tables"]:
+
+        dist = grid.get(state)
+        distfinal = grid.get(goal)
+        if dist is None:
+            continue
+
+        if distfinal is None:
+            continue
+        sub = dist - distfinal
+
+        if sub < 0:
+            sub = -sub
+        if sub > f:
+            f = sub
+
+    return f
 
 
 def h_custom(state, problem) -> float:
@@ -46,7 +195,12 @@ def h_custom(state, problem) -> float:
     TODO (Part 6d). Combine heuristics while preserving admissibility and
     consistency. Evaluate both search savings and precomputation cost.
     """
-    raise NotImplementedError("Part 6d: implement h_custom")
+    manhattan = h_manhattan(state, problem)
+    diff2 = h_differential(state, problem)
+    if manhattan > diff2:
+        return manhattan
+    else:
+        return diff2
 
 
 #: How many belief versions a landmark table may be stale before you rebuild
