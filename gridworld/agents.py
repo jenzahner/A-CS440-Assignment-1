@@ -97,7 +97,7 @@ class RepeatedForwardAStar(ReplanningAgent):
             #follow the path given 
             for next_cell in path [1:]: 
                 #make sure next_cell is free 
-                if not self.belief.is_known_free(next_cell): 
+                if not self.belief.is_known_free(*next_cell): 
                     break 
 
                 self.move_to(next_cell)
