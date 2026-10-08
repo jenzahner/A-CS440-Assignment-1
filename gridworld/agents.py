@@ -129,7 +129,19 @@ class RepeatedBackwardAStar(RepeatedForwardAStar):
 
     def plan(self):
         """TODO (Part 4a). Search target-to-agent, then reverse the path."""
-        raise NotImplementedError("Part 4a: implement plan")
+        startOfS = self.goal
+        finalOfS = self.pos
+        problem = self.make_search(startOfS, finalOfS)
+        path, g = astar(
+            problem,
+            self.h,
+            tie_break=self.tie_break,
+            weight=self.weight
+        )
+        problem.stop_clock()
+        if path is not None:
+            path = list(reversed(path)) 
+        return path, g
 
 
 class AdaptiveAStar(RepeatedForwardAStar):
