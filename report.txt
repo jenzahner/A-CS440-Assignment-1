@@ -14,8 +14,8 @@
 # team's 50 gridworlds, so get them right before you generate a final report.
 Ethan Schivel, 224004705
 Mufaddal Diwan, 223002417
-Mahkeh Patel, 223005088
-Jennifer Zahner,220009356
+Mahek Patel, 223005088
+Jennifer Zahner, 220009356
 
 === PLEDGE ===
 # Confirm that this statement is true for every team member; keep it unchanged.

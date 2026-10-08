@@ -12,7 +12,8 @@ from gridworld.heap import BinaryHeap
 
 def astar(problem: SearchProblem, h, *, tie_break: str = "large_g",
           weight: float = 1.0, learned_h: dict | None = None):
-    """A* graph search over the believed map.  Returns ``(path, g)``.
+    """
+    A* graph search over the believed map.  Returns ``(path, g)``.
 
         ``path``   list of cells ``[start, ..., goal]``, or ``None`` if the
                    goal cannot be reached
@@ -84,13 +85,26 @@ def astar(problem: SearchProblem, h, *, tie_break: str = "large_g",
     closed = set() #states that have already been explored
     open_heap = BinaryHeap() # states we need to explore
 
-    #A* uses f = g+h 
+    # Part 3: Tie-breaking when states have an equal f or g
+
+    counter = 0 # When f and g tie, the counter is compared
+
+    def key (f, gval):
+        nonlocal counter # Updating the counter that was initialized outside of this function
+        counter +=1
+        if (tie_break == "large_g"):
+            tb = -gval #The larger g becomes higher priority when we flip the sign
+        else:
+            tb = gval
+        return (f, tb, counter) # if f and g tie, the earlier push is expanded
+
+    # Part 5: Use the larger of the base h and the learned h 
     start_h = h(problem.start, problem)
     if learned_h is not None:
         start_h = max(start_h, learned_h.get(problem.start, 0))
 
-    startf = start_h
-    open_heap.push(startf, problem.start)
+    # f = g + (weight * h). g = 0 in the beginning
+    open_heap.push(key(weight * start_h, 0), problem.start) 
 
     #keep taking the lowest priority state from open
     while open_heap.data:
@@ -114,15 +128,16 @@ def astar(problem: SearchProblem, h, *, tie_break: str = "large_g",
                 #if yes swap 
                 g[neighbor] = newg
                 parent[neighbor] = present 
-                #and calculate A* priority 
-                neighbor_h = h(neighbor, problem)
 
+                 # Part 5: use the larger of the base h and the learned h
+                neighbor_h = h(neighbor, problem)
                 if learned_h is not None:
                     neighbor_h = max(neighbor_h, learned_h.get(neighbor, 0))
 
-                f = newg + neighbor_h
-                #then add to open
-                open_heap.push(f,neighbor)
+                # f = g + (weight * h). Only h is scaled
+                f = newg + (weight * neighbor_h)
+
+                open_heap.push(key(f, newg), neighbor)
 
     return(None,g)
 
