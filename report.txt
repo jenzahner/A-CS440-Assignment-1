@@ -52,7 +52,16 @@ REPLACE THIS TEXT WITH YOUR ANSWER
 # hypothesis, say why the worlds are paired, and interpret the test on both
 # families. Distinguish significance from effect size, state the signed-rank
 # assumptions, and explain what failure to reject would mean.
-REPLACE THIS TEXT WITH YOUR ANSWER
+
+Adaptive A* learns C-g(s) for expanded states, keeping estimates
+admissible and consistent even when costs rise. It helps more on
+mazes because walls cause detours Manhattan misses. Ratios were
+{{maze.ada_over_fwd}} for mazes and {{scatter.ada_over_fwd}} for
+scatter. We tested no paired difference on the same maps. Maze
+p={{maze.ada.p}} was significant, scatter p={{scatter.ada.p}} was
+not. Ratios show effect size; not significant doesn't mean equal.
+Wilcoxon needs independent maps and symmetric differences;
+paired t needs roughly normal differences.
 
 === Q6 ===
 # Which landmarks did you pick and why?  Why is |d(l,s) - d(l,goal)| admissible
