@@ -46,6 +46,9 @@ REPLACE THIS TEXT WITH YOUR ANSWER
 # starts and how that start moves between replans.
 REPLACE THIS TEXT WITH YOUR ANSWER
 
+Repeated Forward A* starts searching from the character’s current position and searches toward the goal. Repeated Backward A* is different and starts at the goal and searches backward toward the character. The similarity is that after the character moves, its position then changes, but the goal is still exactly the same.
+When the character discovers a blockage, it has to find a new path. Forward A* searches from the character to the goal using the new map after that blockage is found. Backward A* searches from the goal to the character, and its path is reversed so the character can follow it to the goal. Another similarity between both Repeated Forward A* and Repeated Backward A* is that they then use that new map to find a new path or route when they discover that the path they were first planning to use has a blockage. 
+
 === Q5 ===
 # Why are the updated h-values admissible and consistent, and why do they stay
 # consistent when action costs increase?  Then the measurement: state your null
