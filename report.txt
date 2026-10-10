@@ -27,13 +27,67 @@ I did not use generative AI to write any code or any answer in this submission, 
 # are blocked?  Then: why are Manhattan
 # distances consistent when the agent may move only in the four compass
 # directions and every move costs one?
-REPLACE THIS TEXT WITH YOUR ANSWER
+
+The agent moves east first over north because, with limited knowledge, 
+A* will use its current cost and then the heuristic estimate in order to 
+determine which cell seems the most promising. When moving east, the
+ total estimated cost is lower since the agent uses the free-space assumption, 
+meaning it assumes unknown cells are free, so the agent selects that cell first. 
+Even if this is not the best move, the agent does not know the entire map,
+ so it is only able to make the decision based on the information available to it. 
+
+The Manhattan distance for a four-directional movement with unit cost is 
+h(n) = |xn-xt|+|yn-yt| ( n is the current cell and t is the target)
+The heuristic needs to satisfy the edge inequality 
+h(n)<=c(n,n’)+h(n’) for every neighboring cell (n’)
+The movement is four-directional: up, down, left, or right
+So if we move to a neighboring cell, the Manhattan distance will change by exactly 1 
+|xn-xt|+|yn-yt|<=|xn’-xt|+|yn’-yt|+1
+So therefore: h(n)<=c(n,n’)+h(n’)
+Which  means the Manhattan distance is still consistent for four-directional unit-cost movement 
+The goal condition will be h(g)=0  since the distance from the goal to the goal(itself) is 0
+
 
 === Q2 ===
 # Why must the agent either reach the target or discover that it cannot, in
 # finite time?  Give the argument, and the reason the number of moves is bounded
 # above by the number of unblocked cells squared.
-REPLACE THIS TEXT WITH YOUR ANSWER
+The agent finishes in finite time 
+
+---At every step, repeated Forward A* will run A* with the knowledge it has about the grid 
+
+There can be two outcomes 
+    A* finds a path to the target - the agent will then follow the path and either reach the target or discover a blocked cell on the path 
+    A* can’t find a path to the target - the agent then determines the target is unreachable and stops 
+
+If the agent discovers a blocked cell, the information it knows about the grid is updated 
+and it attempts to find a path again
+
+Every time this happens, the agent will learn something new about the grid, and since 
+there are only finitely many cells, this can only happen finitely many times
+
+Eventually, the agent reaches the target, or the agent discovers enough blocked cells to 
+determine that no path exists
+
+Therefore, the agent either reaches the target, or determines that they can’t reach the 
+target in a finite time. 
+
+----The agent makes at most n^2 moves 
+	
+Allow n to be the number of unblocked cells 
+
+Every time the agent plans a path, the path will contain at most n moves since there are 
+only n possible unblocked cells to use
+
+If the agent discovers the path it's on is blocked, it will replan 
+
+When this happens, it discovers a new blocked cell, which cannot happen more than n 
+times 
+
+So the agent can make at most n moves on each of at most n different paths 
+
+Thus, the agent makes at most n*n or n^2 moves 
+
 
 === Q3 ===
 # What did breaking ties toward larger g do to the number of expansions, and
