@@ -136,6 +136,24 @@ paired t needs roughly normal differences.
 # results, including table construction and the rebuild threshold.
 REPLACE THIS TEXT WITH YOUR ANSWER
 
+The landmarks chosen were the four corners of the grid. They seemed easiest to work
+with and also spread across the entire map. Due to possible blockages, I used a close-by 
+cell as the landmark and then used BFS from each landmark to build a table with the distances 
+to the cells. (|d(l,s) - d(l,goal)|) is admissible because it involves the shortest possible 
+path and does not overestimate the actual distance to the goal. It is also consistent because 
+the estimated distance stays in the expected range even when the distance to the goal is changing.
+Tables made using an older map stay admissible because finding blockages can make paths
+increase in length and will not make them shorter. I used the max of the Manhattan 
+and the differential instead of addition because that could cause the estimate to be 
+more than it should. I compared the number of cells searched with the full map and the
+number of cells when the path was changed and the agent had to take a different route 
+because of blockages. Building the tables is a longer process in the beginning, but they 
+have the ability to reduce the number of cells searched after. This is why tables can be
+useful, even if they take longer to build. The tables are built again when the map 
+changes by over 16. This makes sure that they are not constantly rebuilt, 
+especially for smaller and simple changes. 
+Rebuilding with smaller changes can take more time.
+
 === Q7 ===
 # Prove the w-times-optimal bound for a consistent base h without reopening.
 # Interpret the sweep and choose a weight. How can replanning affect the
