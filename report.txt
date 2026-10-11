@@ -39,7 +39,7 @@ Manhattan distance is consistent because moving one cell in any of the four dire
 # Why must the agent either reach the target or discover that it cannot, in
 # finite time?  Give the argument, and the reason the number of moves is bounded
 # above by the number of unblocked cells squared.
-The agent finishes in finite time 
+The agent finishes in finite time.
 
 Repeated Forward A* will eventually reach the target or determine it cannot be reached. Each time A* finds a path, the agent follows it until it reaches the goal or finds a blocked cell.
 
@@ -51,7 +51,7 @@ If n is the number of unblocked cells, each planned path has at most n moves. Th
 === Q3 ===
 # What did breaking ties toward larger g do to the number of expansions, and
 # why?  Say why the size of the effect is not the same on the two families.
-Brekaing ties towards larger g cut expanstions on both families, but much more on scatter. The maze using small g is  {{maze.tie.small}}, which is 3 times larger than when it uses the large g {{maze.tie.large}}. The scatter map using small g is {{scatter.tie.small}} which is many more times than  {{scatter.tie.large}}. Because Manhattan distance is close to the real distance, small g goes through the whole region. Large g skips most of it. Walls also make the true distance longer than the Manhattan Distance.
+Breakaing ties towards larger g cut expanstions on both families, but much more on scatter. The maze using small g is  {{maze.tie.small}}, which is 3 times larger than when it uses the large g {{maze.tie.large}}. The scatter map using small g is {{scatter.tie.small}} which is many more times than  {{scatter.tie.large}}. Because Manhattan distance is close to the real distance, small g goes through the whole region. Large g skips most of it. Walls also make the true distance longer than the Manhattan Distance.
 
 === Q4 ===
 # Compare Repeated Backward A* and Repeated Forward A*. Explain how newly
@@ -86,4 +86,4 @@ I used the four grid corners as landmarks, choosing nearby cells when obstacles 
 # Prove the w-times-optimal bound for a consistent base h without reopening.
 # Interpret the sweep and choose a weight. How can replanning affect the
 # trade-off? Can Adaptive A* safely learn C-g(s) from a weighted search?
-Weighted A* guarantees a path cost within w times of the optimal cost when using a consistent heuristic. Increasing the weight reduced expansions with a small increase in path cost, making it the best balance between speed and quality. However, obstacles can increase total search effort and travel distance. Adaptive A* should always use a weight of 1 because higher weights can make its learned heuristic inaccurate and break its guarantees.
+Weighted A* guarantees a path cost within a factor of w of the optimal cost when using a consistent heuristic. Increasing the weight reduced expansions with a small increase in path cost, making it the best balance between speed and quality. However, obstacles can increase total search effort and travel distance. Adaptive A* should always use a weight of 1 because higher weights can make its learned heuristic inaccurate and break its guarantees.
