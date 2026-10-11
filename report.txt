@@ -92,25 +92,13 @@ Thus, the agent makes at most n*n or n^2 moves
 === Q3 ===
 # What did breaking ties toward larger g do to the number of expansions, and
 # why?  Say why the size of the effect is not the same on the two families.
-REPLACE THIS TEXT WITH YOUR ANSWER
+Brekaing ties towards larger g cut expanstions on both families, but much more on scatter. The maze using small g is  {{maze.tie.small}}, which is 3 times larger than when it uses the large g {{maze.tie.large}}. The scatter map using small g is {{scatter.tie.small}} which is many more times than  {{scatter.tie.large}}. Because Manhattan distance is close to the real distance, small g goes through the whole region. Large g skips most of it. Walls also make the true distance longer than the Manhattan Distance.
 
 === Q4 ===
 # Compare Repeated Backward A* and Repeated Forward A*. Explain how newly
 # discovered blockages affect the two directions. Say where each search
 # starts and how that start moves between replans.
-REPLACE THIS TEXT WITH YOUR ANSWER
-
-Repeated Forward A* starts searching from the character’s current position 
-and searches toward the goal. Repeated Backward A* is different and starts 
-at the goal and searches backward toward the character. The similarity is 
-that after the character moves, its position then changes, but the goal is
-still exactly the same.When the character discovers a blockage, it has to find
-a new path. Forward A* searches from the character to the goal using the new map
-after that blockage is found. Backward A* searches from the goal to the character,
-and its path is reversed so the character can follow it to the goal. Another similarity 
-between both Repeated Forward A* and Repeated Backward A* is that they then use that
-new map to find a new path or route when they discover that the path 
-they were first planning to use has a blockage. 
+The similarity between repeated forward and backward A* is that after the character moves, its position then changes, but the goal is still the same. Forward A* searches from the character to the goal using the new map after an obstacle is found. Backward A* searches from the goal to the character, and its solution is reversed. Both Repeated Forward and backward A* also use the new map to find a new path or route when they discover that the path they were first planning to use has an obstacle.
 
 === Q5 ===
 # Why are the updated h-values admissible and consistent, and why do they stay
@@ -134,28 +122,9 @@ paired t needs roughly normal differences.
 # and consistent, and why does a table built from an older belief stay
 # admissible? Why use max rather than sum? Compare known-map and replanning
 # results, including table construction and the rebuild threshold.
-REPLACE THIS TEXT WITH YOUR ANSWER
-
-The landmarks chosen were the four corners of the grid. They seemed easiest to work
-with and also spread across the entire map. Due to possible blockages, I used a close-by 
-cell as the landmark and then used BFS from each landmark to build a table with the distances 
-to the cells. (|d(l,s) - d(l,goal)|) is admissible because it involves the shortest possible 
-path and does not overestimate the actual distance to the goal. It is also consistent because 
-the estimated distance stays in the expected range even when the distance to the goal is changing.
-Tables made using an older map stay admissible because finding blockages can make paths
-increase in length and will not make them shorter. I used the max of the Manhattan 
-and the differential instead of addition because that could cause the estimate to be 
-more than it should. I compared the number of cells searched with the full map and the
-number of cells when the path was changed and the agent had to take a different route 
-because of blockages. Building the tables is a longer process in the beginning, but they 
-have the ability to reduce the number of cells searched after. This is why tables can be
-useful, even if they take longer to build. The tables are built again when the map 
-changes by over 16. This makes sure that they are not constantly rebuilt, 
-especially for smaller and simple changes. 
-Rebuilding with smaller changes can take more time.
-
+I used the four grid corners as landmarks, choosing nearby cells when obstacles blocked them, and BFS to create distance tables. The differential heuristic is consistent because it does not overestimate. Older tables are admissible because discovering obstacles can increase path lengths. I compared the number of cells searched on the map and when obstacles forced the agent to replan. Although building and updating the tables takes extra time, they reduce the number of cells searched and improve efficiency.
 === Q7 ===
 # Prove the w-times-optimal bound for a consistent base h without reopening.
 # Interpret the sweep and choose a weight. How can replanning affect the
 # trade-off? Can Adaptive A* safely learn C-g(s) from a weighted search?
-REPLACE THIS TEXT WITH YOUR ANSWER
+Weighted A* guarantees a path cost within w times of the optimal cost when using a consistent heuristic. Increasing the weight reduced expansions with a small increase in path cost, making it the best balance between speed and quality. However, obstacles can increase total search effort and travel distance. Adaptive A* should always use a weight of 1 because higher weights can make its learned heuristic inaccurate and break its guarantees.
